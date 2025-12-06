@@ -23,3 +23,26 @@ Integrated digital dispute resolution tools for faster conflict resolution.
 A user-friendly interface that helps courts, lawyers, and citizens access information effortlessly.
 
 Overall, the system reduces delays, enhances transparency, and helps the justice system deliver timely and efficient outcomes.
+
+Features:-
+
+Clean and Modern Interface – Easy-to-use layout with simple navigation.
+
+Mini Case Manager – Add, view, and delete cases with priority, status, and hearing dates.
+
+Dashboard Summary – Shows total cases, high-priority cases, pending cases, and overdue hearings.
+
+Overdue Case Highlighting – Automatically marks cases whose hearing dates have passed.
+
+Smart Chatbot Assistant – Answers common questions about delays and the justice system.
+
+Google Search Support (Optional) – If enabled, the chatbot can fetch answers from the web.
+
+Local Storage Support – All added cases remain saved in the browser even after refreshing.
+
+Fully Responsive Design – Works smoothly on mobile, tablet, and desktop.
+
+TEAM 
+1) Harsh Karwal
+2) Gyanada Nasikkar
+3) minal pawar
