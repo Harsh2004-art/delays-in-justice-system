@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JustiFlow – Delays in Justice System</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">⚖️ JustiFlow</div>
+        <div class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="problem.html">Problem</a>
+            <a href="solutions.html">Solution</a>
+            <a href="#case-manager">Case Manager</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Fixing Delays in the Justice System</h1>
+            <p>From endless case backlogs to smart, tech-enabled courts.</p>
+            <div class="hero-buttons">
+                <a href="problems.html" class="btn primary">View Problems</a>
+                <a href="solutions.html" class="btn outline">See Our Solution</a>
+            </div>
+        </div>
+        <div class="hero-card">
+            <h2>Why JustiFlow?</h2>
+            <p>Designed to help courts track cases, reduce delays, and bring citizens closer to timely justice.</p>
+            <ul>
+                <li>Smart case tracking</li>
+                <li>Digital records</li>
+                <li>Automated reminders</li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Quick Overview Section -->
+    <section class="container two-column">
+        <div class="card soft">
+            <h2>What’s the Problem?</h2>
+            <p>
+                Courts are overloaded with pending cases, manual paperwork, and slow processes. 
+                Citizens wait for years to get a final verdict.
+            </p>
+            <a href="problems.html" class="text-link">Read full problem →</a>
+        </div>
+        <div class="card soft">
+            <h2>Our Tech Vision</h2>
+            <p>
+                A modern case management system with automation, e-filing, dashboards, and digital workflows 
+                to speed up justice delivery.
+            </p>
+            <a href="solutions.html" class="text-link">Explore solution ideas →</a>
+        </div>
+    </section>
+
+    <!-- Case Manager (Main Logic Part) -->
+    <section id="case-manager" class="container">
+        <h2 class="section-title">Mini Case Management System (Demo)</h2>
+        <p class="subtext center">
+            Add sample cases, assign priority and status, and see how a digital dashboard can help manage court workloads.
+        </p>
+
+        <div class="grid-2">
+            <!-- Case Form -->
+            <form id="case-form" class="card">
+                <h3>Add New Case</h3>
+
+                <div class="form-row">
+                    <label for="caseNumber">Case Number</label>
+                    <input type="text" id="caseNumber" placeholder="e.g. CR/2025/1042" required />
+                </div>
+
+                <div class="form-row">
+                    <label for="partyName">Party Name</label>
+                    <input type="text" id="partyName" placeholder="e.g. State vs. John Doe" required />
+                </div>
+
+                <div class="form-row">
+                    <label for="caseType">Case Type</label>
+                    <select id="caseType" required>
+                        <option value="Civil">Civil</option>
+                        <option value="Criminal">Criminal</option>
+                        <option value="Family">Family</option>
+                        <option value="Property">Property</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="priority">Priority</label>
+                    <select id="priority" required>
+                        <option value="High">High</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="status">Status</label>
+                    <select id="status" required>
+                        <option value="Pending" selected>Pending</option>
+                        <option value="Hearing Scheduled">Hearing Scheduled</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="hearingDate">Next Hearing Date</label>
+                    <input type="date" id="hearingDate" />
+                </div>
+
+                <button type="submit" class="btn primary full">Add Case</button>
+            </form>
+
+            <!-- Case List -->
+            <div class="card">
+                <h3>Case Dashboard</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Case No.</th>
+                            <th>Party</th>
+                            <th>Type</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Hearing</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="case-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Hackathon Project • JustiFlow • 2025</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        let cases = [];
+
+        function loadCases() {
+            const saved = localStorage.getItem("cases");
+            cases = saved ? JSON.parse(saved) : [];
+        }
+
+        function saveCases() {
+            localStorage.setItem("cases", JSON.stringify(cases));
+        }
+
+        function renderCases() {
+            const tbody = document.getElementById("case-table-body");
+            tbody.innerHTML = "";
+
+            cases.forEach((c, index) => {
+                const tr = document.createElement("tr");
+
+                tr.innerHTML = `
+                    <td>${c.caseNumber}</td>
+                    <td>${c.partyName}</td>
+                    <td>${c.caseType}</td>
+                    <td><span class="pill pill-${c.priority.toLowerCase()}">${c.priority}</span></td>
+                    <td>${c.status}</td>
+                    <td>${c.hearingDate || "-"}</td>
+                    <td><button class="btn small danger" data-index="${index}">Delete</button></td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+
+            document.querySelectorAll("button[data-index]").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const idx = btn.getAttribute("data-index");
+                    cases.splice(idx, 1);
+                    saveCases();
+                    renderCases();
+                });
+            });
+        }
+
+        function setupForm() {
+            const form = document.getElementById("case-form");
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                const caseNumber = document.getElementById("caseNumber").value.trim();
+                const partyName = document.getElementById("partyName").value.trim();
+                const caseType = document.getElementById("caseType").value;
+                const priority = document.getElementById("priority").value;
+                const status = document.getElementById("status").value;
+                const hearingDate = document.getElementById("hearingDate").value;
+
+                if (!caseNumber || !partyName) {
+                    alert("Please fill in Case Number and Party Name.");
+                    return;
+                }
+
+                const newCase = {
+                    caseNumber,
+                    partyName,
+                    caseType,
+                    priority,
+                    status,
+                    hearingDate
+                };
+
+                cases.push(newCase);
+                saveCases();
+                renderCases();
+                form.reset();
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadCases();
+            setupForm();
+            renderCases();
+        });
+    </script>
+</body>
+</html>
