@@ -91,8 +91,11 @@ Optimized for mobile phones, tablets, and desktops.
 
 ⭐ TEAM
 
-1.Harsh Karwal
+1.Harsh Karwal (caption)
 
 2.Gyanada Nasikkar
 
 3.Minal Pawar
+
+thank you 
+
